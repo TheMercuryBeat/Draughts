@@ -1,1 +1,1 @@
-"# solution.Java" 
+# Draughts game
