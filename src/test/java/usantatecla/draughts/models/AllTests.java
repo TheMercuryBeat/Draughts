@@ -9,6 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
         BoardTest.class,
         ColorTest.class,
         CoordinateTest.class,
+        DirectionTest.class,
         DraughtTest.class,
         GameTest.class,
         PawnTest.class,
