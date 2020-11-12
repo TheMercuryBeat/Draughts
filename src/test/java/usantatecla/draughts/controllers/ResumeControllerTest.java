@@ -1,36 +1,33 @@
 package usantatecla.draughts.controllers;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.verify;
 
 public class ResumeControllerTest extends InteractorControllerTest {
 
+    @InjectMocks
     private ResumeController resumeController;
-
-    @Before
-    public void beforeResumeController() {
-        resumeController = new ResumeController(game, state);
-    }
 
     @Test
     public void testNextState() {
         resumeController.next();
-        verify(state, atLeastOnce()).next();
+        verify(state).next();
     }
 
     @Test
     public void testReset() {
         resumeController.reset();
-        verify(state, atLeastOnce()).reset();
-        verify(game, atLeastOnce()).reset();
+        verify(state).reset();
+        verify(game).reset();
     }
 
     @Test
     public void testAcceptInteractorControllersVisitor() {
         resumeController.accept(interactorControllersVisitor);
-        verify(interactorControllersVisitor, atLeastOnce()).visit(eq(resumeController));
+        verify(interactorControllersVisitor).visit(eq(resumeController));
     }
 
 }

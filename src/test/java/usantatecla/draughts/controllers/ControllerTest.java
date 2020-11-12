@@ -2,7 +2,9 @@ package usantatecla.draughts.controllers;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import usantatecla.draughts.models.Color;
 import usantatecla.draughts.models.Coordinate;
 import usantatecla.draughts.models.Game;
@@ -15,15 +17,21 @@ import static org.mockito.Mockito.when;
 
 public class ControllerTest {
 
+    @Mock
+    protected Game game;
+
+    @Mock
+    protected State state;
+
+    @Mock
+    protected Coordinate coordinate;
+
+    @InjectMocks
     private Controller controller;
-    protected Game game = Mockito.mock(Game.class);
-    protected State state = Mockito.mock(State.class);
-    protected Coordinate coordinate = Mockito.mock(Coordinate.class);
 
     @Before
     public void beforeController() {
-        Mockito.reset(game, state, coordinate);
-        controller = new Controller(game, state);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test

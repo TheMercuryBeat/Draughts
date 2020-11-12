@@ -1,15 +1,10 @@
 package usantatecla.draughts.controllers;
 
-import org.junit.Before;
-import org.mockito.Mockito;
+import org.mockito.Mock;
 
-public abstract class InteractorControllerTest extends ControllerTest {
+public class InteractorControllerTest extends ControllerTest {
 
-    protected InteractorControllersVisitor interactorControllersVisitor = Mockito.mock(InteractorControllersVisitor.class);
-
-    @Before
-    public void beforeInteractorController() {
-        Mockito.reset(interactorControllersVisitor);
-    }
+    @Mock
+    protected InteractorControllersVisitor interactorControllersVisitor;
 
 }
