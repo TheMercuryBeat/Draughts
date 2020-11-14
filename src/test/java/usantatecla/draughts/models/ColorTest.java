@@ -2,7 +2,8 @@ package usantatecla.draughts.models;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -12,11 +13,12 @@ import static org.mockito.Mockito.when;
 
 public class ColorTest {
 
-    private final Coordinate coordinate = Mockito.mock(Coordinate.class);
+    @Mock
+    private Coordinate coordinate;
 
     @Before
     public void before() {
-        Mockito.reset(coordinate);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
