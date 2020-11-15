@@ -16,5 +16,5 @@ import org.junit.runners.Suite.SuiteClasses;
         StateTest.class,
         TurnTest.class
 })
-public class AllTests {
+public class AllModelTests {
 }

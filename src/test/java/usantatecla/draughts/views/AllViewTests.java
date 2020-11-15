@@ -12,5 +12,5 @@ import org.junit.runners.Suite.SuiteClasses;
         StartViewTest.class,
         ViewTest.class
 })
-public class AllTests {
+public class AllViewTests {
 }
