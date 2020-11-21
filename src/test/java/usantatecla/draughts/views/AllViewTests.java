@@ -9,7 +9,6 @@ import org.junit.runners.Suite.SuiteClasses;
         GameViewTest.class,
         PlayViewTest.class,
         ResumeViewTest.class,
-        StartViewTest.class,
         ViewTest.class
 })
 public class AllViewTests {
