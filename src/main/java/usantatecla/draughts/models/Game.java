@@ -57,15 +57,8 @@ public class Game {
 	private Error isCorrectPairMove(int pair, Coordinate... coordinates) {
 		assert coordinates[pair] != null;
 		assert coordinates[pair + 1] != null;
-		if (board.isEmpty(coordinates[pair]))
-			return Error.EMPTY_ORIGIN;
-		if (this.turn.getOppositeColor() == this.board.getColor(coordinates[pair]))
-			return Error.OPPOSITE_PIECE;
-		if (!this.board.isEmpty(coordinates[pair + 1]))
-			return Error.NOT_EMPTY_TARGET;
-		List<Piece> betweenDiagonalPieces = 
-			this.board.getBetweenDiagonalPieces(coordinates[pair], coordinates[pair + 1]);
-		return this.board.getPiece(coordinates[pair]).isCorrectMovement(betweenDiagonalPieces, pair, coordinates);
+
+		return new FilterCoordinateMovement().check(this.board, this.turn, coordinates, pair);
 	}
 
 	private void pairMove(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {
