@@ -9,7 +9,12 @@ public class CorrectMovementCoordinatePairHandler extends CoordinatePairHandler 
     }
 
     @Override
-    public Error check(Board board, Turn turn, Coordinate[] coordinates, int pair) {
+    public Error check(Movement movement) {
+
+        Board board = movement.getBoard();
+        Coordinate[] coordinates = movement.getCoordinates();
+        int pair = movement.getPair();
+
         List<Piece> betweenDiagonalPieces = board.getBetweenDiagonalPieces(coordinates[pair], coordinates[pair + 1]);
         Error error = board.getPiece(coordinates[pair]).isCorrectMovement(betweenDiagonalPieces, pair, coordinates);
 
@@ -17,6 +22,6 @@ public class CorrectMovementCoordinatePairHandler extends CoordinatePairHandler 
             return error;
         }
 
-        return this.checkNext(board, turn, coordinates, pair);
+        return this.checkNext(movement);
     }
 }

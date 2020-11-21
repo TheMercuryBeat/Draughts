@@ -14,7 +14,7 @@ public class FilterCoordinateMovement {
 
     }
 
-    public Error check(Board board, Turn turn, Coordinate[] coordinates, int pair) {
-        return coordinatePairHandler.check(board, turn, coordinates, pair);
+    public Error check(Movement movement) {
+        return coordinatePairHandler.check(movement);
     }
 }

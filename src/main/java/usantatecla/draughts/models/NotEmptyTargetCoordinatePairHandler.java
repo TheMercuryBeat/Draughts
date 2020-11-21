@@ -7,10 +7,15 @@ public class NotEmptyTargetCoordinatePairHandler extends CoordinatePairHandler {
     }
 
     @Override
-    public Error check(Board board, Turn turn, Coordinate[] coordinates, int pair) {
+    public Error check(Movement movement) {
+
+        Board board = movement.getBoard();
+        Coordinate[] coordinates = movement.getCoordinates();
+        int pair = movement.getPair();
+
         if (!board.isEmpty(coordinates[pair + 1])) {
             return Error.NOT_EMPTY_TARGET;
         }
-        return this.checkNext(board, turn, coordinates, pair);
+        return this.checkNext(movement);
     }
 }

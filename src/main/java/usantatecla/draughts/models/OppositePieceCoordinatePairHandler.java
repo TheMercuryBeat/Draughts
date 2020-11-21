@@ -7,12 +7,17 @@ public class OppositePieceCoordinatePairHandler extends CoordinatePairHandler {
     }
 
     @Override
-    public Error check(Board board, Turn turn, Coordinate[] coordinates, int pair) {
+    public Error check(Movement movement) {
+
+        Board board = movement.getBoard();
+        Turn turn = movement.getTurn();
+        Coordinate[] coordinates = movement.getCoordinates();
+        int pair = movement.getPair();
 
         if (turn.getOppositeColor() == board.getColor(coordinates[pair])) {
             return Error.OPPOSITE_PIECE;
         }
 
-        return this.checkNext(board, turn, coordinates, pair);
+        return this.checkNext(movement);
     }
 }

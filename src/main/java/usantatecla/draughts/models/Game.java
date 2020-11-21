@@ -9,10 +9,12 @@ public class Game {
 
 	private final Board board;
 	private final Turn turn;
+	private final FilterCoordinateMovement filterCoordinateMovement;
 
 	Game(Board board) {
 		this.turn = new Turn();
 		this.board = board;
+		this.filterCoordinateMovement = new FilterCoordinateMovement();
 	}
 
 	public Game() {
@@ -58,7 +60,7 @@ public class Game {
 		assert coordinates[pair] != null;
 		assert coordinates[pair + 1] != null;
 
-		return new FilterCoordinateMovement().check(this.board, this.turn, coordinates, pair);
+		return this.filterCoordinateMovement.check(new Movement(this.board, this.turn, coordinates, pair));
 	}
 
 	private void pairMove(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {

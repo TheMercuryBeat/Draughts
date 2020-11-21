@@ -7,13 +7,17 @@ public class EmptyOriginCoordinatePairHandler extends CoordinatePairHandler {
     }
 
     @Override
-    public Error check(Board board, Turn turn, Coordinate[] coordinates, int pair) {
+    public Error check(Movement movement) {
+
+        Board board = movement.getBoard();
+        Coordinate[] coordinates = movement.getCoordinates();
+        int pair = movement.getPair();
 
         if (board.isEmpty(coordinates[pair])) {
             return Error.EMPTY_ORIGIN;
         }
 
-        return this.checkNext(board, turn, coordinates, pair);
+        return this.checkNext(movement);
 
     }
 }

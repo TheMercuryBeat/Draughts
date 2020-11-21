@@ -8,13 +8,13 @@ public abstract class CoordinatePairHandler {
         this.next = next;
     }
 
-    public Error checkNext(Board board, Turn turn, Coordinate[] coordinates, int pair) {
+    public Error checkNext(Movement movement) {
         if (this.next == null) {
             return null;
         }
 
-        return this.next.check(board, turn, coordinates, pair);
+        return this.next.check(movement);
     }
 
-    public abstract Error check(Board board, Turn turn, Coordinate[] coordinates, int pair);
+    public abstract Error check(Movement movement);
 }
