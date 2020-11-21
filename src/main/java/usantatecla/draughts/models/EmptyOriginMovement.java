@@ -1,8 +1,8 @@
 package usantatecla.draughts.models;
 
-public class EmptyOriginCoordinatePairHandler extends CoordinatePairHandler {
+public class EmptyOriginMovement extends MovementHandler {
 
-    public EmptyOriginCoordinatePairHandler(CoordinatePairHandler next) {
+    public EmptyOriginMovement(MovementHandler next) {
         super(next);
     }
 
@@ -17,7 +17,7 @@ public class EmptyOriginCoordinatePairHandler extends CoordinatePairHandler {
             return Error.EMPTY_ORIGIN;
         }
 
-        return this.checkNext(movement);
+        return this.nextMovement(movement);
 
     }
 }

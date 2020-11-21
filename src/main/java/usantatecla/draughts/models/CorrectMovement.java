@@ -2,9 +2,9 @@ package usantatecla.draughts.models;
 
 import java.util.List;
 
-public class CorrectMovementCoordinatePairHandler extends CoordinatePairHandler {
+public class CorrectMovement extends MovementHandler {
 
-    public CorrectMovementCoordinatePairHandler() {
+    public CorrectMovement() {
         super(null);
     }
 
@@ -22,6 +22,6 @@ public class CorrectMovementCoordinatePairHandler extends CoordinatePairHandler 
             return error;
         }
 
-        return this.checkNext(movement);
+        return this.nextMovement(movement);
     }
 }

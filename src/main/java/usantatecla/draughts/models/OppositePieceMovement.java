@@ -1,8 +1,8 @@
 package usantatecla.draughts.models;
 
-public class OppositePieceCoordinatePairHandler extends CoordinatePairHandler {
+public class OppositePieceMovement extends MovementHandler {
 
-    public OppositePieceCoordinatePairHandler(CoordinatePairHandler next) {
+    public OppositePieceMovement(MovementHandler next) {
         super(next);
     }
 
@@ -18,6 +18,6 @@ public class OppositePieceCoordinatePairHandler extends CoordinatePairHandler {
             return Error.OPPOSITE_PIECE;
         }
 
-        return this.checkNext(movement);
+        return this.nextMovement(movement);
     }
 }
