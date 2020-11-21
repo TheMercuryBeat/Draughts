@@ -2,7 +2,7 @@ package usantatecla.draughts.models;
 
 import java.util.List;
 
-public class CorrectMovement extends MovementHandler {
+class CorrectMovement extends MovementHandler {
 
     public CorrectMovement() {
         super(null);

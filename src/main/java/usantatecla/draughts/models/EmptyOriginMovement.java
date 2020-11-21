@@ -1,6 +1,6 @@
 package usantatecla.draughts.models;
 
-public class EmptyOriginMovement extends MovementHandler {
+class EmptyOriginMovement extends MovementHandler {
 
     public EmptyOriginMovement(MovementHandler next) {
         super(next);

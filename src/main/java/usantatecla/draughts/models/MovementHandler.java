@@ -1,14 +1,14 @@
 package usantatecla.draughts.models;
 
-public abstract class MovementHandler {
+abstract class MovementHandler {
 
-    protected MovementHandler nextMovementHandler;
+    private final MovementHandler nextMovementHandler;
 
     public MovementHandler(MovementHandler movementHandler) {
         this.nextMovementHandler = movementHandler;
     }
 
-    public Error nextMovement(Movement movement) {
+    protected Error nextMovement(Movement movement) {
         if (this.nextMovementHandler == null) {
             return null;
         }

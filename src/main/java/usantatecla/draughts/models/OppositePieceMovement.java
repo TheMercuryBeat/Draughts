@@ -1,6 +1,6 @@
 package usantatecla.draughts.models;
 
-public class OppositePieceMovement extends MovementHandler {
+class OppositePieceMovement extends MovementHandler {
 
     public OppositePieceMovement(MovementHandler next) {
         super(next);

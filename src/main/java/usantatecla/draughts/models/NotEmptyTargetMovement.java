@@ -1,6 +1,6 @@
 package usantatecla.draughts.models;
 
-public class NotEmptyTargetMovement extends MovementHandler {
+class NotEmptyTargetMovement extends MovementHandler {
 
     public NotEmptyTargetMovement(MovementHandler next) {
         super(next);
@@ -16,6 +16,7 @@ public class NotEmptyTargetMovement extends MovementHandler {
         if (!board.isEmpty(coordinates[pair + 1])) {
             return Error.NOT_EMPTY_TARGET;
         }
+
         return this.nextMovement(movement);
     }
 }
