@@ -9,15 +9,23 @@ import usantatecla.draughts.controllers.InteractorController;
 import usantatecla.draughts.controllers.PlayController;
 import usantatecla.draughts.controllers.ResumeController;
 import usantatecla.draughts.controllers.StartController;
+import usantatecla.draughts.utils.Console;
 
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class ViewTest {
 
+    private static final String TITLE = "Draughts";
+
     @Mock
-    private StartView startView;
+    private Console console;
+
+    @Mock
+    private StartController startController;
+
+    @Mock
+    private GameView gameView;
 
     @Mock
     private PlayView playView;
@@ -31,6 +39,7 @@ public class ViewTest {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
+        this.view = spy(this.view);
     }
 
     @Test
@@ -45,9 +54,13 @@ public class ViewTest {
     @Test
     public void testInteractStartController() {
 
-        StartController startController = mock(StartController.class);
+        when(view.createGameView()).thenReturn(gameView);
+
         view.visit(startController);
-        verify(startView).interact(eq(startController));
+
+        verify(console).writeln(eq(TITLE));
+        verify(gameView).write(eq(startController));
+        verify(startController).start();
 
     }
 
