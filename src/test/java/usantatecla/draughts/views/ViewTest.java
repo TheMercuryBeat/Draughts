@@ -11,7 +11,9 @@ import usantatecla.draughts.controllers.PlayController;
 import usantatecla.draughts.controllers.ResumeController;
 import usantatecla.draughts.controllers.StartController;
 import usantatecla.draughts.utils.Console;
+import usantatecla.draughts.utils.YesNoDialog;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -25,7 +27,7 @@ public class ViewTest {
     private PlayView playView;
 
     @Mock
-    private ResumeView resumeView;
+    private YesNoDialog yesNoDialog;
 
     @InjectMocks
     private View view;
@@ -71,11 +73,24 @@ public class ViewTest {
     }
 
     @Test
-    public void testInteractResumeController() {
+    public void testResumeResetGame() {
 
         ResumeController resumeController = mock(ResumeController.class);
+
+        when(this.yesNoDialog.read(anyString())).thenReturn(true);
         view.visit(resumeController);
-        verify(resumeView).interact(eq(resumeController));
+        verify(resumeController).reset();
+
+    }
+
+    @Test
+    public void testResumeFinishGame() {
+
+        ResumeController resumeController = mock(ResumeController.class);
+
+        when(this.yesNoDialog.read(anyString())).thenReturn(false);
+        view.visit(resumeController);
+        verify(resumeController).next();
 
     }
 
