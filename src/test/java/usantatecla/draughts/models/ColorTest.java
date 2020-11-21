@@ -8,8 +8,8 @@ import org.mockito.MockitoAnnotations;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
+import static usantatecla.draughts.models.Color.NONE;
 
 public class ColorTest {
 
@@ -50,7 +50,7 @@ public class ColorTest {
         when(coordinate.getRow()).thenReturn(4);
 
         Color color = Color.getInitialColor(coordinate);
-        assertNull(color);
+        assertThat(color, is(equalTo(NONE)));
 
     }
 
@@ -60,7 +60,7 @@ public class ColorTest {
         when(coordinate.isBlack()).thenReturn(false);
 
         Color color = Color.getInitialColor(coordinate);
-        assertNull(color);
+        assertThat(color, is(equalTo(NONE)));
 
     }
 
