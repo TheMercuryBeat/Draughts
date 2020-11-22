@@ -19,10 +19,14 @@ public enum Color {
 
     static Color getInitialColor(final Coordinate coordinate) {
         if (coordinate.isBlack())
-            for(Color color : Color.values())
+            for (Color color : Color.values())
                 if (color.isInitialRow(coordinate.getRow()))
                     return color;
         return NONE;
     }
-	
+
+    static boolean hasColor(Color color) {
+        return WHITE.equals(color) || BLACK.equals(color);
+    }
+
 }

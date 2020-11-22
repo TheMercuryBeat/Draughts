@@ -32,7 +32,7 @@ public class Game {
                 Coordinate coordinate = new Coordinate(i, j);
                 Color color = Color.getInitialColor(coordinate);
                 Piece piece = null;
-                if (!NONE.equals(color)) {
+                if (hasColor(color)) {
                     piece = new Pawn(color);
                 }
                 this.board.put(coordinate, piece);
