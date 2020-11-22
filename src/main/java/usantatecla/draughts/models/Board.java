@@ -88,6 +88,14 @@ class Board {
         return string + row + "\n";
     }
 
+    BoardVersion createBoardVersion() {
+        return new BoardVersion(this.pieces);
+    }
+
+    void setBoardVersion(BoardVersion boardVersion) {
+        this.pieces = boardVersion.getPieces();
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -109,5 +117,22 @@ class Board {
             return false;
         return true;
     }
+
+    static class BoardVersion {
+
+        private Piece[][] pieces;
+
+        public BoardVersion(Piece[][] pieces) {
+            this.pieces = new Piece[pieces[0].length][pieces[1].length];
+            for (int i = 0; i < Coordinate.getDimension(); i++)
+                for (int j = 0; j < Coordinate.getDimension(); j++)
+                    this.pieces[i][j] = pieces[i][j];
+        }
+
+        public Piece[][] getPieces() {
+            return pieces;
+        }
+    }
+
 
 }

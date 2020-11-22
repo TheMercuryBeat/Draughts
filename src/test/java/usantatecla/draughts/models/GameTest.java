@@ -447,6 +447,43 @@ public class GameTest {
 
     }
 
+    @Test
+    public void testMoveEatingTooMuchEating() {
+
+        //@formatter:off
+        this.game = new GameBuilder()
+                .board( "       B",
+                        "      N ",
+                        "        ",
+                        "    n   ",
+                        "   n    ",
+                        "        ",
+                        "        ",
+                        "        ")
+                .build();
+
+        //@formatter:on
+
+        Coordinate originCoordinate = new Coordinate(0, 7);
+        Coordinate firstTargetCoordinate = new Coordinate(2, 5);
+        Coordinate secondTargetCoordinate = new Coordinate(5, 2);
+
+        Error error = this.game.move(originCoordinate, firstTargetCoordinate, secondTargetCoordinate);
+        Piece whiteDraught = this.game.getPiece(originCoordinate);
+        Piece firstBlackDraught = this.game.getPiece(new Coordinate(1, 6));
+        Piece secondBlackPawn = this.game.getPiece(new Coordinate(3, 4));
+        Piece thirdBlackPawn = this.game.getPiece(new Coordinate(4, 3));
+
+
+        assertThat(error, is(equalTo(Error.TOO_MUCH_EATINGS)));
+        assertNotNull(whiteDraught);
+        assertNotNull(firstBlackDraught);
+        assertThat(getCode("N"), is(equalTo(firstBlackDraught.getCode())));
+        assertNotNull(secondBlackPawn);
+        assertNotNull(thirdBlackPawn);
+
+    }
+
     // This test is ignored because this case works but it's a bug no resolve yet
     @Test
     @Ignore
@@ -473,4 +510,9 @@ public class GameTest {
         assertNotNull(error);
 
     }
+
+    private String getCode(String code) {
+        return code;
+    }
+
 }

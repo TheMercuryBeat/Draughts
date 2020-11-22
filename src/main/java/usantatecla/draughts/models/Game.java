@@ -3,19 +3,21 @@ package usantatecla.draughts.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import static usantatecla.draughts.models.Color.NONE;
+import static usantatecla.draughts.models.Color.hasColor;
 import static usantatecla.draughts.models.Error.isError;
 import static usantatecla.draughts.models.Error.isNotError;
 
 public class Game {
 
-    private final Board board;
-    private final Turn turn;
+    private Board board;
+    private Turn turn;
+    private BoardRegistry boardRegistry;
     private final MovementChecker movementChecker;
 
     Game(Board board) {
         this.turn = new Turn();
         this.board = board;
+        this.boardRegistry = new BoardRegistry(this.board);
         this.movementChecker = new MovementChecker();
     }
 
@@ -53,7 +55,7 @@ public class Game {
         } while (pair < coordinates.length - 1 && isNotError(error));
 
         if (isError(error)) {
-            this.unMovesUntilPair(removedCoordinates, pair, coordinates);
+            this.boardRegistry.undo();
         } else {
             error = this.isCorrectGlobalMove(removedCoordinates, coordinates);
 
@@ -62,6 +64,7 @@ public class Game {
                     this.board.remove(coordinate);
                 }
                 this.turn.change();
+                this.boardRegistry.registry();
             }
         }
 
