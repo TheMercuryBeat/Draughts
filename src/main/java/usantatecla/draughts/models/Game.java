@@ -109,13 +109,6 @@ public class Game {
         return Error.NONE;
     }
 
-    private void unMovesUntilPair(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {
-        for (int j = pair; j > 0; j--)
-            this.board.move(coordinates[j], coordinates[j - 1]);
-        for (Coordinate removedPiece : removedCoordinates)
-            this.board.put(removedPiece, new Pawn(this.getOppositeTurnColor()));
-    }
-
     public boolean isBlocked() {
         for (Coordinate coordinate : this.getCoordinatesWithActualColor())
             if (!this.isBlocked(coordinate))
