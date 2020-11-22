@@ -52,16 +52,19 @@ public class Game {
             }
         } while (pair < coordinates.length - 1 && isNotError(error));
 
-        error = this.isCorrectGlobalMove(error, removedCoordinates, coordinates);
-
         if (isError(error)) {
             this.unMovesUntilPair(removedCoordinates, pair, coordinates);
         } else {
-            for (Coordinate coordinate : removedCoordinates) {
-                this.board.remove(coordinate);
+            error = this.isCorrectGlobalMove(removedCoordinates, coordinates);
+
+            if (isNotError(error)) {
+                for (Coordinate coordinate : removedCoordinates) {
+                    this.board.remove(coordinate);
+                }
+                this.turn.change();
             }
-            this.turn.change();
         }
+
         return error;
     }
 
@@ -97,9 +100,7 @@ public class Game {
         return null;
     }
 
-    private Error isCorrectGlobalMove(Error error, List<Coordinate> removedCoordinates, Coordinate... coordinates) {
-        if (isError(error))
-            return error;
+    private Error isCorrectGlobalMove(List<Coordinate> removedCoordinates, Coordinate... coordinates) {
         if (coordinates.length > 2 && coordinates.length > removedCoordinates.size() + 1)
             return Error.TOO_MUCH_JUMPS;
         return Error.NONE;
