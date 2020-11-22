@@ -24,8 +24,8 @@ public class View implements InteractorControllersVisitor {
     private static final String MESSAGE = "¿Queréis jugar otra?";
     private String string;
 
-    private final Console console;
-    private final YesNoDialog yesNoDialog;
+    private Console console;
+    private YesNoDialog yesNoDialog;
 
     public View() {
         this.console = new Console();

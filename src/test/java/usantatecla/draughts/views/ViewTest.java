@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import usantatecla.draughts.controllers.InteractorController;
 import usantatecla.draughts.controllers.PlayController;
 import usantatecla.draughts.controllers.ResumeController;
@@ -21,9 +22,23 @@ import static org.mockito.Mockito.*;
 
 public class ViewTest {
 
+    private static final String TITLE = "Draughts";
+    private static final String MESSAGE = "¿Queréis jugar otra?";
     private static final String ERROR_MESSAGE = "Error!!! Formato incorrecto";
     private static final String LOST_MESSAGE = "Derrota!!! No puedes mover tus fichas!!!";
     private PlayController playController;
+
+    @Mock
+    private InteractorController controller;
+
+    @Mock
+    private GameView gameView;
+
+    @Mock
+    private StartController startController;
+
+    @Mock
+    private ResumeController resumeController;
 
     @Mock
     private Console console;
@@ -31,20 +46,19 @@ public class ViewTest {
     @Mock
     private YesNoDialog yesNoDialog;
 
+    @Spy
     @InjectMocks
     private View view;
 
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        this.view = spy(this.view);
         this.playController = spy(new PlayController(new Game(), new State()));
     }
 
     @Test
     public void testAccept() {
 
-        InteractorController controller = mock(InteractorController.class);
         view.interact(controller);
         verify(controller).accept(eq(view));
 
@@ -53,14 +67,11 @@ public class ViewTest {
     @Test
     public void testInteractStartController() {
 
-        GameView gameView = mock(GameView.class);
-        StartController startController = mock(StartController.class);
-
         when(view.createGameView()).thenReturn(gameView);
 
         view.visit(startController);
 
-        verify(console).writeln(anyString());
+        verify(console).writeln(eq(TITLE));
         verify(gameView).write(eq(startController));
         verify(startController).start();
 
@@ -139,9 +150,7 @@ public class ViewTest {
     @Test
     public void testResumeResetGame() {
 
-        ResumeController resumeController = mock(ResumeController.class);
-
-        when(this.yesNoDialog.read(anyString())).thenReturn(true);
+        when(this.yesNoDialog.read(eq(MESSAGE))).thenReturn(true);
         view.visit(resumeController);
         verify(resumeController).reset();
 
@@ -150,9 +159,7 @@ public class ViewTest {
     @Test
     public void testResumeFinishGame() {
 
-        ResumeController resumeController = mock(ResumeController.class);
-
-        when(this.yesNoDialog.read(anyString())).thenReturn(false);
+        when(this.yesNoDialog.read(eq(MESSAGE))).thenReturn(false);
         view.visit(resumeController);
         verify(resumeController).next();
 
