@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static usantatecla.draughts.models.Color.NONE;
+import static usantatecla.draughts.models.Error.isError;
+import static usantatecla.draughts.models.Error.isNotError;
 
 public class Game {
 
@@ -38,26 +40,27 @@ public class Game {
     }
 
     public Error move(Coordinate... coordinates) {
-        Error error = null;
-        List<Coordinate> removedCoordinates = new ArrayList<Coordinate>();
+        Error error;
+        List<Coordinate> removedCoordinates = new ArrayList<>();
         int pair = 0;
+
         do {
             error = this.isCorrectPairMove(pair, coordinates);
-            if (error == null) {
+            if (isNotError(error)) {
                 this.pairMove(removedCoordinates, pair, coordinates);
                 pair++;
             }
-        } while (pair < coordinates.length - 1 && error == null);
+        } while (pair < coordinates.length - 1 && isNotError(error));
 
         error = this.isCorrectGlobalMove(error, removedCoordinates, coordinates);
 
-        if (error == null) {
+        if (isError(error)) {
+            this.unMovesUntilPair(removedCoordinates, pair, coordinates);
+        } else {
             for (Coordinate coordinate : removedCoordinates) {
                 this.board.remove(coordinate);
             }
             this.turn.change();
-        } else {
-            this.unMovesUntilPair(removedCoordinates, pair, coordinates);
         }
         return error;
     }
@@ -95,11 +98,11 @@ public class Game {
     }
 
     private Error isCorrectGlobalMove(Error error, List<Coordinate> removedCoordinates, Coordinate... coordinates) {
-        if (error != null)
+        if (isError(error))
             return error;
         if (coordinates.length > 2 && coordinates.length > removedCoordinates.size() + 1)
             return Error.TOO_MUCH_JUMPS;
-        return null;
+        return Error.NONE;
     }
 
     private void unMovesUntilPair(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {

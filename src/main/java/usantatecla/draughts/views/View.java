@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static usantatecla.draughts.models.Error.isError;
+import static usantatecla.draughts.models.Error.isNotError;
+
 public class View implements InteractorControllersVisitor {
 
     private static final String TITLE = "Draughts";
@@ -68,7 +71,7 @@ public class View implements InteractorControllersVisitor {
     void playGame(PlayController playController) {
         Error error;
         do {
-            error = null;
+            error = Error.NONE;
             this.string = this.read(playController.getColor());
             if (this.isCanceledFormat())
                 playController.cancel();
@@ -78,10 +81,10 @@ public class View implements InteractorControllersVisitor {
             } else {
                 error = playController.move(this.getCoordinates());
                 new GameView().write(playController);
-                if (error == null && playController.isBlocked())
+                if (isNotError(error) && playController.isBlocked())
                     this.writeLost();
             }
-        } while (error != null);
+        } while (isError(error));
     }
 
     private String read(Color color) {

@@ -159,7 +159,7 @@ public class GameTest {
         Error error = this.game.move(originCoordinate, targetCoordinate);
         Piece whitePawn = this.game.getPiece(targetCoordinate);
 
-        assertNull(error);
+        assertThat(error, is(equalTo(Error.NONE)));
         assertNotNull(whitePawn);
 
     }
@@ -187,7 +187,7 @@ public class GameTest {
         Piece whitePawn = this.game.getPiece(targetCoordinate);
         Color gameTurnColor = this.game.getTurnColor();
 
-        assertNull(error);
+        assertThat(error, is(equalTo(Error.NONE)));
         assertNotNull(whitePawn);
         assertThat(gameTurnColor, is(equalTo(Color.BLACK)));
 
@@ -216,7 +216,7 @@ public class GameTest {
         Piece blackPawn = this.game.getPiece(new Coordinate(6, 2));
         Piece whitePawn = this.game.getPiece(targetCoordinate);
 
-        assertNull(error);
+        assertThat(error, is(equalTo(Error.NONE)));
         assertNull(blackPawn);
         assertNotNull(whitePawn);
 
@@ -247,7 +247,7 @@ public class GameTest {
         Piece secondBlackPawn = this.game.getPiece(new Coordinate(4, 4));
         Piece whitePawn = this.game.getPiece(secondTargetCoordinate);
 
-        assertNull(error);
+        assertThat(error, is(equalTo(Error.NONE)));
         assertNull(firstBlackPawn);
         assertNull(secondBlackPawn);
         assertNotNull(whitePawn);
@@ -316,7 +316,7 @@ public class GameTest {
         Piece secondBlackPawn = this.game.getPiece(new Coordinate(4, 3));
         Piece thirdBlackPawn = this.game.getPiece(new Coordinate(2, 5));
 
-        assertNull(error);
+        assertThat(error, is(equalTo(Error.NONE)));
         assertNull(firstBlackPawn);
         assertNull(secondBlackPawn);
         assertNull(thirdBlackPawn);

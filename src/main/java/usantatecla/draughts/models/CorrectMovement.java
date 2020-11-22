@@ -2,6 +2,8 @@ package usantatecla.draughts.models;
 
 import java.util.List;
 
+import static usantatecla.draughts.models.Error.isError;
+
 class CorrectMovement extends MovementHandler {
 
     public CorrectMovement() {
@@ -18,7 +20,7 @@ class CorrectMovement extends MovementHandler {
         List<Piece> betweenDiagonalPieces = board.getBetweenDiagonalPieces(coordinates[pair], coordinates[pair + 1]);
         Error error = board.getPiece(coordinates[pair]).isCorrectMovement(betweenDiagonalPieces, pair, coordinates);
 
-        if (error != null) {
+        if (isError(error)) {
             return error;
         }
 

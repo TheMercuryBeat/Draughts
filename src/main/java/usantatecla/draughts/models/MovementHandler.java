@@ -10,7 +10,7 @@ abstract class MovementHandler {
 
     protected Error nextMovement(Movement movement) {
         if (this.nextMovementHandler == null) {
-            return null;
+            return Error.NONE;
         }
 
         return this.nextMovementHandler.check(movement);
