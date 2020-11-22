@@ -3,8 +3,15 @@ package usantatecla.draughts.views;
 import usantatecla.draughts.controllers.InteractorController;
 import usantatecla.draughts.models.Coordinate;
 import usantatecla.draughts.models.Piece;
+import usantatecla.draughts.utils.Console;
 
-class GameView extends SubView {
+class GameView {
+
+    private final Console console;
+
+    public GameView() {
+        this.console = new Console();
+    }
 
     void write(InteractorController controller) {
         assert controller != null;
@@ -28,7 +35,7 @@ class GameView extends SubView {
             Piece piece = controller.getPiece(new Coordinate(row, j));
             if (piece == null)
                 this.console.write(" ");
-            else 
+            else
                 this.console.write(piece.getCode());
         }
         this.console.writeln((row + 1) + "");

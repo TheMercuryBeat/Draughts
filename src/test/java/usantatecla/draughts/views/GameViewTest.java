@@ -17,7 +17,7 @@ import java.io.PrintStream;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.spy;
 
-public class GameViewTest extends SubViewTest {
+public class GameViewTest {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
