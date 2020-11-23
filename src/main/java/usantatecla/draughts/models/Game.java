@@ -5,7 +5,6 @@ import java.util.List;
 
 import static usantatecla.draughts.models.Color.hasColor;
 import static usantatecla.draughts.models.Error.isError;
-import static usantatecla.draughts.models.Error.isNotError;
 
 public class Game {
 
@@ -42,30 +41,14 @@ public class Game {
     }
 
     public Error move(Coordinate... coordinates) {
-        Error error;
-        List<Coordinate> removedCoordinates = new ArrayList<>();
-        int pair = 0;
 
-        do {
-            error = this.isCorrectPairMove(pair, coordinates);
-            if (isNotError(error)) {
-                this.pairMove(removedCoordinates, pair, coordinates);
-                pair++;
-            }
-        } while (pair < coordinates.length - 1 && isNotError(error));
+        Movement movement = new Movement(board, turn, coordinates);
+        Error error = movement.doMove(movementChecker);
 
         if (isError(error)) {
-            this.boardRegistry.undo();
+            boardRegistry.undo();
         } else {
-            error = this.isCorrectGlobalMove(removedCoordinates, coordinates);
-
-            if (isNotError(error)) {
-                for (Coordinate coordinate : removedCoordinates) {
-                    this.board.remove(coordinate);
-                }
-                this.turn.change();
-                this.boardRegistry.registry();
-            }
+            boardRegistry.registry();
         }
 
         return error;
