@@ -42,13 +42,13 @@ public class Game {
 
     public Error move(Coordinate... coordinates) {
 
-        Movement movement = new Movement(board, turn, coordinates);
-        Error error = movement.doMove(movementChecker);
+        Movement movement = new Movement(this.board, this.turn, coordinates);
+        Error error = movement.doMove(this.movementChecker);
 
         if (isError(error)) {
-            boardRegistry.undo();
+            this.boardRegistry.undo();
         } else {
-            boardRegistry.registry();
+            this.boardRegistry.registry();
         }
 
         return error;

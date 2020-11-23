@@ -26,19 +26,11 @@ class Movement {
 
     public Error doMove(MovementChecker movementChecker) {
 
-        Error error;
-        do {
-            error = movementChecker.check(this);
-            if (isNotError(error)) {
-                this.move();
-                pair++;
-            }
-        } while (pair < coordinates.length - 1 && isNotError(error));
-
-        error = isCorrectGlobalMove(error);
+        Error error = this.checkAndMove(movementChecker);
+        error = this.isCorrectGlobalMove(error);
 
         if (isNotError(error)) {
-            for (Coordinate coordinate : removedCoordinates) {
+            for (Coordinate coordinate : this.removedCoordinates) {
                 this.board.remove(coordinate);
             }
             this.turn.change();
@@ -48,21 +40,53 @@ class Movement {
     }
 
     private void move() {
-        Coordinate forRemoving = this.getBetweenDiagonalPiece();
-        if (forRemoving != null) {
-            removedCoordinates.add(0, forRemoving);
-        }
-        this.board.move(coordinates[pair], coordinates[pair + 1]);
-        if (this.board.getPiece(coordinates[pair + 1]).isLimit(coordinates[pair + 1])) {
-            Color color = this.board.getColor(coordinates[pair + 1]);
-            this.board.remove(coordinates[pair + 1]);
-            this.board.put(coordinates[pair + 1], new Draught(color));
+        this.board.move(this.getOriginCoordinate(), this.getTargetCoordinate());
+        this.addOppositePieceCoordinateToRemove();
+        if (isBoardLimit()) {
+            convertToDraught();
         }
     }
 
+    private void addOppositePieceCoordinateToRemove() {
+        Coordinate forRemoving = this.getBetweenDiagonalPiece();
+        if (forRemoving != null) {
+            this.removedCoordinates.add(0, forRemoving);
+        }
+    }
+
+    private void convertToDraught() {
+        Color color = this.board.getColor(this.getTargetCoordinate());
+        this.board.remove(this.getTargetCoordinate());
+        this.board.put(this.getTargetCoordinate(), new Draught(color));
+    }
+
+    private boolean isBoardLimit() {
+        return this.board.getPiece(this.getTargetCoordinate()).isLimit(this.getTargetCoordinate());
+    }
+
+    private Coordinate getTargetCoordinate() {
+        return this.coordinates[this.pair + 1];
+    }
+
+    private Coordinate getOriginCoordinate() {
+        return this.coordinates[this.pair];
+    }
+
+    private Error checkAndMove(MovementChecker movementChecker) {
+        Error error;
+        do {
+            error = movementChecker.check(this);
+            if (isNotError(error)) {
+                this.move();
+                pair++;
+            }
+        } while (pair < coordinates.length - 1 && isNotError(error));
+        return error;
+    }
+
     private Coordinate getBetweenDiagonalPiece() {
-        assert coordinates[pair].isOnDiagonal(coordinates[pair + 1]);
-        List<Coordinate> betweenCoordinates = coordinates[pair].getBetweenDiagonalCoordinates(coordinates[pair + 1]);
+        assert this.getOriginCoordinate().isOnDiagonal(this.getTargetCoordinate());
+        List<Coordinate> betweenCoordinates = this.getOriginCoordinate().getBetweenDiagonalCoordinates(this.getTargetCoordinate());
         if (betweenCoordinates.isEmpty())
             return null;
         for (Coordinate coordinate : betweenCoordinates) {
@@ -76,7 +100,7 @@ class Movement {
     private Error isCorrectGlobalMove(Error error) {
         if (isError(error))
             return error;
-        if (coordinates.length > 2 && coordinates.length > removedCoordinates.size() + 1)
+        if (this.coordinates.length > 2 && this.coordinates.length > removedCoordinates.size() + 1)
             return Error.TOO_MUCH_JUMPS;
         return Error.NONE;
     }
