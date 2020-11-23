@@ -11,26 +11,21 @@ class Movement {
     private final Board board;
     private final Turn turn;
     private final Coordinate[] coordinates;
-    private int pair;
-    private List<Coordinate> removedCoordinates;
+    private final List<Coordinate> removedCoordinates = new ArrayList<>();
+    private int pair = 0;
 
-    Movement(Board board, Turn turn, Coordinate[] coordinates, int pair) {
+    Movement(Board board, Turn turn, Coordinate... coordinates) {
+
+        assert coordinates[pair] != null;
+        assert coordinates[pair + 1] != null;
+
         this.board = board;
         this.turn = turn;
         this.coordinates = coordinates;
-        this.pair = pair;
-        this.removedCoordinates = new ArrayList<>();
-    }
-
-    Movement(Board board, Turn turn, Coordinate[] coordinates) {
-        this.board = board;
-        this.turn = turn;
-        this.coordinates = coordinates;
-        this.pair = 0;
-        this.removedCoordinates = new ArrayList<>();
     }
 
     public Error doMove(MovementChecker movementChecker) {
+
         Error error;
         do {
             error = movementChecker.check(this);
@@ -103,7 +98,4 @@ class Movement {
         return pair;
     }
 
-    public List<Coordinate> getRemovedCoordinates() {
-        return removedCoordinates;
-    }
 }

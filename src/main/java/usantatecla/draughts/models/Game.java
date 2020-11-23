@@ -54,44 +54,6 @@ public class Game {
         return error;
     }
 
-    private Error isCorrectPairMove(int pair, Coordinate... coordinates) {
-        assert coordinates[pair] != null;
-        assert coordinates[pair + 1] != null;
-
-        return this.movementChecker.check(new Movement(this.board, this.turn, coordinates, pair));
-    }
-
-    private void pairMove(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {
-        Coordinate forRemoving = this.getBetweenDiagonalPiece(pair, coordinates);
-        if (forRemoving != null) {
-            removedCoordinates.add(0, forRemoving);
-        }
-        this.board.move(coordinates[pair], coordinates[pair + 1]);
-        if (this.board.getPiece(coordinates[pair + 1]).isLimit(coordinates[pair + 1])) {
-            Color color = this.board.getColor(coordinates[pair + 1]);
-            this.board.remove(coordinates[pair + 1]);
-            this.board.put(coordinates[pair + 1], new Draught(color));
-        }
-    }
-
-    private Coordinate getBetweenDiagonalPiece(int pair, Coordinate... coordinates) {
-        assert coordinates[pair].isOnDiagonal(coordinates[pair + 1]);
-        List<Coordinate> betweenCoordinates = coordinates[pair].getBetweenDiagonalCoordinates(coordinates[pair + 1]);
-        if (betweenCoordinates.isEmpty())
-            return null;
-        for (Coordinate coordinate : betweenCoordinates) {
-            if (this.getPiece(coordinate) != null)
-                return coordinate;
-        }
-        return null;
-    }
-
-    private Error isCorrectGlobalMove(List<Coordinate> removedCoordinates, Coordinate... coordinates) {
-        if (coordinates.length > 2 && coordinates.length > removedCoordinates.size() + 1)
-            return Error.TOO_MUCH_JUMPS;
-        return Error.NONE;
-    }
-
     public boolean isBlocked() {
         for (Coordinate coordinate : this.getCoordinatesWithActualColor())
             if (!this.isBlocked(coordinate))
@@ -113,10 +75,12 @@ public class Game {
     }
 
     private boolean isBlocked(Coordinate coordinate) {
-        for (int i = 1; i <= 2; i++)
-            for (Coordinate target : coordinate.getDiagonalCoordinates(i))
-                if (this.isCorrectPairMove(0, coordinate, target) == null)
-                    return false;
+        for (int i = 1; i <= 2; i++) {
+            for (Coordinate target : coordinate.getDiagonalCoordinates(i)) {
+                Error error = this.movementChecker.check(new Movement(this.board, this.turn, coordinate, target));
+                return isError(error);
+            }
+        }
         return true;
     }
 
